@@ -6,7 +6,9 @@ Contributors: Daisy Rocha-Montanez (https://github.com/daisyrocha), Bryan Fowles
 
 Description: This fitness app allows users to create an account or log in to an existing account with their credentials.
              Users are able to view workouts and can also save them when logged in to their user account. The app allows
-             users to create a workout schedule and view images of the exercises.
+             users to create a workout schedule and view images of the exercises. To begin, users will open the app and see
+             a list of images that we obtain from the API. Users will be able to tap on the image and if logged in, will be
+             able to see a description of the workout.
 
 
 API being used: https://wger.de/api/v2/exerciseinfo/?format=json
@@ -14,7 +16,8 @@ API being used: https://wger.de/api/v2/exerciseinfo/?format=json
                 done, the targeted muscle group, and equipment needed to complete the exercise.
                 
 
-Resources: RetroFit: https://www.youtube.com/watch?v=4JGvDUlfk7Y&t=134s
+Resources: RetroFit: https://www.youtube.com/watch?v=bM2ZhL_je5c <-- Most useful
+                     https://www.youtube.com/watch?v=4JGvDUlfk7Y&t=134s
                      https://guides.codepath.com/android/consuming-apis-with-retrofit
 
 
