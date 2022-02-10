@@ -1,5 +1,6 @@
 package com.daclink.drew.sp22.cst438_project01_starter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText userId, password, name;
-    Button register;
+    Button register, login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         name = findViewById(R.id.name);
         register = findViewById(R.id.register);
+        login = findViewById(R.id.login);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +52,12 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Fill all fields!!", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
     }

@@ -6,31 +6,55 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText userName;
-    private EditText userPassword;
-    private TextView registerUser;
-    private Button loginButton;
+    private EditText userId;
+    private EditText password;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userName = (EditText)findViewById(R.id.textUserName);
-        userPassword = (EditText)findViewById(R.id.textPassword);
-        registerUser = (TextView)findViewById(R.id.registerTextView);
-        loginButton = (Button)findViewById(R.id.loginBtn);
+        userId = findViewById(R.id.userId);
+        password = findViewById(R.id.password);
+        login = findViewById(R.id.login);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo change later to except all users
-                adminPassword(userName.getText().toString(), userPassword.getText().toString());
+                String userIdText = userId.getText().toString();
+                String passwordText = password.getText().toString();
+                if (userIdText.isEmpty() || passwordText.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Fill in all fields.", Toast.LENGTH_SHORT).show();
+                } else {
+                    UserDatabase userDatabase = UserDatabase.getUserDatabase(getApplicationContext());
+                    UserDoa userDoa = userDatabase.userDoa();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            UserEntity userEntity = userDoa.login(userIdText, passwordText);
+                            if(userEntity == null){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Invalid", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                String name = userEntity.name;
+                                // todo set this to the home screen
+//                                startActivity(new Intent(LoginActivity.this, Home.class)
+//                                .putExtra("name", name));
+                            }
+                        }
+                    }).start();
+                }
             }
         });
 
