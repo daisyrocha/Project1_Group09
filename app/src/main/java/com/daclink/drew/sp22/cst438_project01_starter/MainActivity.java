@@ -1,76 +1,81 @@
-package com.daclink.drew.sp22.cst438_project01_starter;
-
-import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
+package com.example.fitnessapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
+import android.os.Bundle;
+import android.widget.TextView;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import com.example.fitnessapp.databinding.ActivityMainBinding;
 
-import com.daclink.drew.sp22.cst438_project01_starter.databinding.ActivityMainBinding;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
-    private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private TextView stringURL;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+//        setContentView(R.layout.activity_main);
 
-        setSupportActionBar(binding.toolbar);
+        /**
+         * this means that whatever we are doing to the stringURL variable,
+         * will be displayed/sent to the textViewImageURL in activity_main.xml
+         */
+        stringURL = binding.textViewImageURL;
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        /**
+         * Here we are now appending the base and the relative url together
+         */
+        ExerciseImageAPI exerciseImageApi_ = RetroFit.getRetrofitInstance().create(ExerciseImageAPI.class);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        /**
+         * Network Request.
+         * This will return a list of our Exercise images
+         * Our list is called "call"
+         */
+
+        Call<ExerciseImage> call = exerciseImageApi_.getImage();
+
+        call.enqueue(new Callback<ExerciseImage>() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onResponse(Call<ExerciseImage> call, Response<ExerciseImage> response) {
+                /**
+                 * If response is not successful, we will print
+                 * the error code to our screen and return nothing
+                 */
+                if(!response.isSuccessful()) {
+                    stringURL.setText("Code: " + response.code());
+                    return;
+                }
+
+                ArrayList<ExerciseImage.results> urls = response.body().getResults();
+
+                for(ExerciseImage.results i : urls) {
+                    /**
+                     * We need to turn these urls into actual images.
+                     * As of now, only the string url is being displayed
+                     * on the screen.
+                     */
+                    String content = "";
+                    content += i.getImage() + "\n";
+
+                    stringURL.append(content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ExerciseImage> call, Throwable t) {
+                stringURL.setText(t.getMessage());
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
     }
 }
