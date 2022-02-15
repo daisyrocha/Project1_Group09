@@ -19,6 +19,8 @@ API being used: https://wger.de/api/v2/exerciseinfo/?format=json
 Resources: RetroFit: https://www.youtube.com/watch?v=bM2ZhL_je5c <-- Most useful
                      https://www.youtube.com/watch?v=4JGvDUlfk7Y&t=134s
                      https://guides.codepath.com/android/consuming-apis-with-retrofit
+                     
+           RetroFit & Recycler View Tutorial: https://www.youtube.com/watch?v=GPP4hOTthRg <-- very good          
 
 
 Status: Incomplete. Currently working on RetroFit feature
