@@ -23,4 +23,4 @@ Resources: RetroFit: https://www.youtube.com/watch?v=bM2ZhL_je5c <-- Most useful
            RetroFit & Recycler View Tutorial: https://www.youtube.com/watch?v=GPP4hOTthRg <-- very good          
 
 
-Status: Incomplete. Currently working on RetroFit feature
+Status: Incomplete. Currently working on RecyclerView. We are able to obtain Data from the API, but cannot display it in form of RecyclerView
