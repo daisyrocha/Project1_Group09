@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fitnessapp.databinding.ActivityMainBinding;
+
 import java.util.List;
 
 public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ViewHolder> {
@@ -24,6 +26,7 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ViewHolder
     @NonNull
     @Override
     public ButtonAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         /**
          * Here we are creating our views/designs
          * This class helps us create the view for the recyclerview.
@@ -42,10 +45,9 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ViewHolder
     @Override
 //    public void onBindViewHolder(@NonNull ButtonAdapter.ViewHolder holder, int position) {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         Log.d("ButtonAdapter", buttonList.toString());
-//        holder.muscle.setText(buttonList.getResults().get(position).getName());
-        holder.muscle.setText("hi");
+        holder.muscle.setText(buttonList.getResults().get(position).getName());
+//        holder.muscle.setText("hi");
     }
 
     /**
