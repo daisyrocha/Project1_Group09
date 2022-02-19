@@ -1,13 +1,17 @@
 package com.example.fitnessapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -46,13 +50,15 @@ public class ButtonRecycler extends AppCompatActivity {
         progressBar = binding.progressBar;
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-//        adapter = new ButtonAdapter(optionsList);
-//        recyclerView.setAdapter(adapter);
 
         fetchData();
 
     }
 
+    /**
+     * This function will fetch the data we are requesting
+     * from the API. We have a progress bar that appears as our app pulls the data
+     */
     private void fetchData() {
         // we call our retrofit here
         progressBar.setVisibility(View.VISIBLE);
@@ -62,14 +68,17 @@ public class ButtonRecycler extends AppCompatActivity {
                 if(response.isSuccessful() && response.body() != null) {
                     optionsList = (response.body());
                     //inserted
-                    adapter = new ButtonAdapter(optionsList);
-                    recyclerView.setAdapter(adapter);
+                    adapter = new ButtonAdapter(optionsList);   // this needs to be inside of this class in order to fetch the data we need
+                    recyclerView.setAdapter(adapter);           // this one also (BOTH need to be here, or else it won't work)
                     Log.d("GettingData", optionsList.toString());
                     adapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.GONE);
                 }
             }
 
+            /**
+             * If our attempt to fetch data fails, we will display an error message in a toast
+             */
             @Override
             public void onFailure(Call<ExerciseInfoJson<MuscleCategory>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
