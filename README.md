@@ -1,7 +1,7 @@
 # Project1_Group09
 Project Title: Fitness App
 
-Contributors: Daisy Rocha-Montanez (https://github.com/daisyrocha), Bryan Fowles (https://github.com/bryanFowles), Hunter Smith (https://github.com/Hunterls914)
+Contributors: Daisy Rocha-Montanez (https://github.com/daisyrocha), Bryan Fowles (https://github.com/bryanFowles)
 
 
 Description: This fitness app allows users to create an account or log in to an existing account with their credentials.
@@ -23,4 +23,4 @@ Resources: RetroFit: https://www.youtube.com/watch?v=bM2ZhL_je5c <-- Most useful
            RetroFit & Recycler View Tutorial: https://www.youtube.com/watch?v=GPP4hOTthRg <-- very good          
 
 
-Status: Incomplete. Currently working on RecyclerView. We are able to obtain Data from the API, but cannot display it in form of RecyclerView
+Status: Incomplete. API endpoint is displayed in RecyclerView. Need 2 more API calls.
