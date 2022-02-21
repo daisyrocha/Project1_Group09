@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase;
  * Currently, our database only has one entity being held, which
  * is the User Entity.
  */
-@Database(entities = {User.class}, version=1, exportSchema = false)
+@Database(entities = {User.class}, version=2, exportSchema = false)
 public abstract class FitnessAppDatabase extends RoomDatabase {
     /**
      * user() is a data access object
@@ -42,7 +42,6 @@ public abstract class FitnessAppDatabase extends RoomDatabase {
     public void populateInitialData() {
         if(user().count() == 0) {
             runInTransaction(() -> {
-                //
                 user().addUser(new User("Administrator", "admin@csumb.edu", "Admin", "111"));
             });
         }

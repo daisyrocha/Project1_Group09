@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             String usrPwd = userPassword.getText().toString();
             boolean match = false;
             String firstName = "";
+            int userPrimaryKey = -1;
 
             /**
              * This if-else checks if the username is left empty,
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                             if(x.getPassword().equals(usrPwd)) {
                                 match = true;
                                 firstName = x.getName();
+                                userPrimaryKey = x.getId();
                             }
                         }
                     }
@@ -92,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
                     if(match) {
                         Toast.makeText(this, "Welcome " + firstName + "!", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(this, ButtonRecycler.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userPrimaryKey", String.valueOf(userPrimaryKey));
+                        i.putExtras(bundle);
                         startActivity(i);
                     } else {
                         Toast.makeText(this, "Invalid Username/Password", Toast.LENGTH_LONG).show();

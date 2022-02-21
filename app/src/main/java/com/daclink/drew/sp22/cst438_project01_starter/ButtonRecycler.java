@@ -1,11 +1,9 @@
 package com.example.fitnessapp;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,18 +18,27 @@ import com.example.fitnessapp.databinding.ActivityButtonRecyclerBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ButtonRecycler extends AppCompatActivity {
 
     private ActivityButtonRecyclerBinding binding;
     private FitnessAppDatabase db;
+    private int userPK;
+
+
+    public int getUserPK() {
+        return userPK;
+    }
+
+    public void setUserPK(int userPK) {
+        this.userPK = userPK;
+    }
 
     RecyclerView recyclerView;  //activity
     ProgressBar progressBar;
     LinearLayoutManager layoutManager;
     ButtonAdapter adapter;
-    ExerciseInfoJson<MuscleCategory> optionsList = new ExerciseInfoJson();   //idk about this one
+    ExerciseInfoJson<MuscleCategory> optionsList = new ExerciseInfoJson();
 
 
     @Override
@@ -39,6 +46,18 @@ public class ButtonRecycler extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityButtonRecyclerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // new code 02/20/22
+        /**
+         * This code is the user ID we receive from the Main Activity
+         * It will tell us which user is the one logging in.
+         * This value should follow the user to any page they decide to navigate to,
+         * in case they want something to happen in their account, like view their user
+         * profile, save a workout, etc.
+         */
+        Bundle bundle = getIntent().getExtras();
+        setUserPK(Integer.parseInt(bundle.getString("userPrimaryKey")));  //storing user id
+//        Log.d("User ID: " + userPK, Integer.toString(userPK));
 
         /**
          * We fetch the recyclerview
@@ -85,5 +104,38 @@ public class ButtonRecycler extends AppCompatActivity {
                 Toast.makeText(ButtonRecycler.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    // bryan's code 2/20/22
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Toast.makeText(this, "Selected: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.Logout:
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "You have logged out!", Toast.LENGTH_SHORT);
+                return true;
+            case R.id.update_profile:
+                /**
+                 * Here I am SENDING the userID to the next intent, which in this case is UserProfile
+                 * We are choosing to send this to be able to easily access the rest of the user's
+                 * information, like name, email, username, and password
+                 */
+                Intent i = new Intent(getApplicationContext(), UserProfile.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("userPrimaryKey", String.valueOf(getUserPK()));
+                i.putExtras(bundle);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }
