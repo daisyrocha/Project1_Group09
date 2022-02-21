@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,11 +44,10 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ViewHolder
      * We insert data into the views
      */
     @Override
-//    public void onBindViewHolder(@NonNull ButtonAdapter.ViewHolder holder, int position) {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d("ButtonAdapter", buttonList.toString());
         holder.muscle.setText(buttonList.getResults().get(position).getName());
-//        holder.muscle.setText("hi");
+        holder.position = position;
     }
 
     /**
@@ -64,9 +64,24 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ViewHolder
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView muscle;
+
+        // new 02/20/22
+        int position;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             muscle = itemView.findViewById(R.id.muscle);
+
+
+            // new
+            itemView.findViewById(R.id.selectedBtn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("demo", "onClick: item clicked " + position + " Muscle: " + muscle.toString());
+                }
+            });
+
         }
+
     }
 }
