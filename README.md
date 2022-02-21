@@ -20,7 +20,8 @@ Resources: RetroFit: https://www.youtube.com/watch?v=bM2ZhL_je5c <-- Most useful
                      https://www.youtube.com/watch?v=4JGvDUlfk7Y&t=134s
                      https://guides.codepath.com/android/consuming-apis-with-retrofit
                      
-           RetroFit & Recycler View Tutorial: https://www.youtube.com/watch?v=GPP4hOTthRg <-- very good          
+RetroFit & Recycler View Tutorial: https://www.youtube.com/watch?v=GPP4hOTthRg <-- very good          
 
 
-Status: Incomplete. API endpoint is displayed in RecyclerView. Need 2 more API calls.
+Status: Incomplete. API endpoint is displayed in RecyclerView. Need 2 more API calls. Logout Button and User profile button were
+        implemented and working, however, we are unable to modify user name, email, username and password at this moment.
